@@ -1,0 +1,44 @@
+---
+  - name: Setup django on vagrant
+    hosts: all
+    user: emma
+    become: yes
+    tasks:
+        
+    - name: opening the todo folder
+      shell: "cd /todoBox"    
+      
+    - name: installing virtualenv
+      shell: |
+        cd /todoBox
+        pip3 install virtualenv
+
+    - name: creating virtualenv
+      shell: |
+        cd /todoBox
+        virtualenv env 
+        
+    - name: activiating virtualenv
+      shell: |
+        cd /todoBox
+        . env/bin/activate
+    
+    - name: Intalling requirements 
+      shell: |
+        cd /todoBox
+        pip3 install -r requirements.txt
+
+    - name: Running makemigrations
+      shell: |
+        cd /todoBox
+        python3 manage.py makemigrations
+
+    - name: Running migrate
+      shell: |
+        cd /todoBox
+        python3 manage.py migrate
+
+    - name: Running django server
+      shell: |
+        cd /todoBox
+        python3 manage.py runserver 0.0.0.0:8000
